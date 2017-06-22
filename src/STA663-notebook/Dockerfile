@@ -369,7 +369,7 @@ RUN pip install pystan
 #--- start spark support
 # install the dev version of the spark magic 
 USER root
-RUN  apt-get install libkrb5-dev -y
+RUN  apt-get install krb5-multidev -y
 RUN cd / ; \
    git clone https://github.com/jupyter-incubator/sparkmagic.git
 RUN cd /sparkmagic ; \
