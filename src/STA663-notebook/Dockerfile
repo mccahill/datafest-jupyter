@@ -369,13 +369,12 @@ RUN pip install pystan
 #--- start spark support
 # install the dev version of the spark magic 
 USER root
+RUN  apt-get install libkrb5-dev -y
 RUN cd / ; \
    git clone https://github.com/jupyter-incubator/sparkmagic.git
 RUN cd /sparkmagic ; \
-   pip install -e hdijupyterutils 
-RUN cd /sparkmagic ; \ 
-   pip install -e autovizwidget ; 
-RUN cd /sparkmagic ; \
+   pip install -e hdijupyterutils; \ 
+   pip install -e autovizwidget ; \
    pip install -e sparkmagic
 
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension 
