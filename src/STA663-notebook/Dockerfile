@@ -372,8 +372,10 @@ USER root
 RUN cd / ; \
    git clone https://github.com/jupyter-incubator/sparkmagic.git
 RUN cd /sparkmagic ; \
-   pip install -e hdijupyterutils ; \ 
-   pip install -e autovizwidget ; \
+   pip install -e hdijupyterutils 
+RUN cd /sparkmagic ; \ 
+   pip install -e autovizwidget ; 
+RUN cd /sparkmagic ; \
    pip install -e sparkmagic
 
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension 
