@@ -9,7 +9,6 @@ stages:
 
 build:
   tags: 
-    - production1
     - STA663
   stage: build
   script: 
@@ -20,7 +19,6 @@ build:
 
 deploy_staging:
   tags: 
-    - production1
     - STA663
   stage: deploy
   script:
@@ -34,7 +32,6 @@ deploy_staging:
 
 deploy_production:
   tags: 
-    - production1
     - STA663
   stage: deploy
   script:
