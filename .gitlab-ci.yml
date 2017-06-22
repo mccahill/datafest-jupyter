@@ -10,7 +10,7 @@ stages:
 build:
   tags: 
     - production1
-    - jupyter-STA663
+    - STA663
   stage: build
   script: 
     - echo "Building the app in staging"
@@ -21,7 +21,7 @@ build:
 deploy_staging:
   tags: 
     - production1
-    - jupyter-STA663
+    - STA663
   stage: deploy
   script:
     - echo "Deploy to staging server"
@@ -35,7 +35,7 @@ deploy_staging:
 deploy_production:
   tags: 
     - production1
-    - jupyter-STA663
+    - STA663
   stage: deploy
   script:
     - echo "Building the production app"
