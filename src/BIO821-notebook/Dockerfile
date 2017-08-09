@@ -352,17 +352,17 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # install the dev version of the spark magic 
-USER root
-RUN cd / ; \
-   git clone https://github.com/jupyter-incubator/sparkmagic.git
-RUN cd /sparkmagic ; \
-   pip install -e hdijupyterutils; \ 
-   pip install -e autovizwidget ; \
-   pip install -e sparkmagic
-
-RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension 
-RUN cd /sparkmagic/sparkmagic ; \
-    jupyter-kernelspec install sparkmagic/kernels/pysparkkernel \
+#USER root
+#RUN cd / ; \
+#   git clone https://github.com/jupyter-incubator/sparkmagic.git
+#RUN cd /sparkmagic ; \
+#   pip install -e hdijupyterutils; \ 
+#   pip install -e autovizwidget ; \
+#   pip install -e sparkmagic
+#
+#RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension 
+#RUN cd /sparkmagic/sparkmagic ; \
+#    jupyter-kernelspec install sparkmagic/kernels/pysparkkernel \
 
 # skip the Spark and SparkR kernel's for now - pyspark is enough for this course
 #RUN cd /sparkmagic/sparkmagic ; \
