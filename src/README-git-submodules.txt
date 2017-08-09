@@ -4,8 +4,6 @@ git submodule fun
 This project has multiple components that are in independent git repositories.
    nginx
    docker-gen
-   mysql
-   ipython-sql
    
 To deal with this (and have everything in one place so it is possible to simplyfy
 building it all) I am using git 'submodules' which have some quirks. To get
