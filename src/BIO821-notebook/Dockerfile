@@ -90,7 +90,6 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 RUN conda install --quiet --yes \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
-    'jupyterlab=0.24.*' \
     && conda clean -tipsy
     
 
