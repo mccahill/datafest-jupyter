@@ -4,14 +4,13 @@
 #
 sudo docker kill jupyter-test-443
 sudo docker rm jupyter-test-443
-        echo ipynb-az-06.oit.duke.edu:443
+        echo ipynb-az-08.oit.duke.edu:443
         sudo docker run --name jupyter-test-443 \
           -d -p 127.0.0.1\:\:8888 \
           -e PASSWORD=$STAGING_TEST_PASSWORD \
-          -e VIRTUAL_HOST=ipynb-az-06.oit.duke.edu\:443 \
+          -e VIRTUAL_HOST=ipynb-az-08.oit.duke.edu\:443 \
           -e MAP_VIRTUAL_PORT=443 \
-          -v /srv/persistent-data/homedirs/monitoring-user-spark/.sparkmagic\:/home/jovyan/.sparkmagic \
-          -v /srv/persistent-data/homedirs/monitoring-user-spark/work\:/home/jovyan/work \
+          -v /srv/persistent-data/homedirs/monitoring-user/work\:/home/jovyan/work \
           -e NB_UID=1000 \
           -t jupyter-test
 
