@@ -9,7 +9,7 @@ stages:
 
 build:
   tags: 
-    - BIO821
+    - jupyter-BIO821
   stage: build
   script: 
     - echo "Building the app in staging"
@@ -19,7 +19,7 @@ build:
 
 deploy_staging:
   tags: 
-    - BIO821
+    - jupyter-BIO821
   stage: deploy
   script:
     - echo "Deploy to staging server"
@@ -32,7 +32,7 @@ deploy_staging:
 
 deploy_production:
   tags: 
-    - BIO821
+    - jupyter-BIO821
   stage: deploy
   script:
     - echo "Building the production app"

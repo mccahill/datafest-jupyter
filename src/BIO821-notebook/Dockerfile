@@ -301,28 +301,6 @@ RUN pip install  bash_kernel
 RUN python -m bash_kernel.install
 USER root
 
-# ******** no mySQL for now ********
-### mysql client so we can connect to an SQL server from bash shell
-##  RUN apt-get update && apt-get -yq dist-upgrade \
-##   && apt-get install -yq --no-install-recommends \
-##    mysql-client \
-##    python-mysqldb \
-##    python-dev \ 
-##    libmysqlclient-dev \ 
-##   && apt-get clean \
-##   && rm -rf /var/lib/apt/lists/*
-##  
-##  # python notebook support for sql
-##  RUN pip install mysqlclient
-##  ADD ipython-sql /home/jovyan/ipython-sql
-##  RUN chown -R jovyan /home/jovyan/ipython-sql
-##  
-##  USER jovyan
-##  
-##  RUN cd /home/jovyan/ipython-sql; \
-##      python setup.py install
-##  
-# ******** no mySQL for now ********
 
 RUN conda install --yes \
     'numpy=1.11*' \
