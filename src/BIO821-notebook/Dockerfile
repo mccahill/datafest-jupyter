@@ -88,8 +88,8 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
-    'notebook=4.2*' \
-    jupyterhub=0.7 \
+    'notebook=5.0.*' \
+    jupyterhub=0.7.* \
     && conda clean -tipsy
     
 
