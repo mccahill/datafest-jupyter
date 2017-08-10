@@ -10,6 +10,10 @@ c.NotebookApp.ip = os.getenv('INTERFACE', '') or '*'
 c.NotebookApp.port = int(os.getenv('PORT', '') or 8888)
 c.NotebookApp.open_browser = False
 
+# disable XSRF if requested
+if 'DISABLE_XSRF' in os.environ:
+  c.NotebookApp.disable_check_xsrf = True
+
 # Set a certificate if USE_HTTPS is set to any value
 if 'USE_HTTPS' in os.environ:
     if not os.path.isfile(PEM_FILE):
