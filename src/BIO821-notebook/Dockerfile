@@ -297,11 +297,10 @@ RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
 #--------- Duke-specific additions ---
 # add bash kernel for the user jovyan
-#USER jovyan
-#RUN pip install  bash_kernel
-#RUN python -m bash_kernel.install
-#USER root
-
+# USER jovyan
+RUN pip install  bash_kernel
+RUN python -m bash_kernel.install
+# USER root
 
 RUN conda install --yes \
     'numpy=1.11*' \
