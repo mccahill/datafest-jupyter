@@ -9,3 +9,6 @@ set -e
 # 
 start.sh jupyter notebook $*
 
+# we can run in JupyterLab mode by stating the notebook server as shown below:
+#start.sh jupyter lab $*
+

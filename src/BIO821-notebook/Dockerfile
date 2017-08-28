@@ -88,9 +88,11 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
-    'notebook=4.2*' \
-    jupyterhub=0.7 \
+    'notebook=5.0.*' \
+    'jupyterhub=0.7.*' \
+    'jupyterlab=0.24.*' \
     && conda clean -tipsy
+    
 
 #----------- scipy
 USER root
@@ -130,12 +132,25 @@ RUN conda install --quiet --yes \
     'h5py=2.6*' \
     'vincent=0.4.*' \
     'beautifulsoup4=4.5.*' \
+    'openpyxl' \
+    'pandas-datareader' \
+    'ipython-sql' \
+    'pandasql' \
+    'memory_profiler'\
+    'psutil' \
+    'cythongsl' \
+    'joblib' \
+    'ipyparallel' \
+    'pybind11' \
+#    'cppimport' \
     'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
 
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
+RUN ipcluster nbextension  enable --user
+
 
 # Install Python 2 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
@@ -209,6 +224,13 @@ RUN echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty m
     julia \
     libnettle4 && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+    
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    graphviz \
+    libgraphviz-dev \
+    pkg-config && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 USER $NB_USER
 
@@ -235,21 +257,25 @@ RUN conda config --add channels r && \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -tipsy
 
-# Install IJulia packages as jovyan and then move the kernelspec out
-# to the system share location. Avoids problems with runtime UID change not
-# taking effect properly on the .local folder in the jovyan home dir.
-RUN julia -e 'Pkg.add("IJulia")' && \
-    mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
-    chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local
-
-# Show Julia where conda libraries are
-# Add essential packages
-RUN echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc.jl && \
-    julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e 'Pkg.add("HDF5")'
-
-# Precompile Julia pakcages
-RUN julia -e 'using IJulia' && julia -e 'using Gadfly' && julia -e 'using RDatasets'&& julia -e 'using HDF5'
+# ******** no Julia for now ********
+##	
+##  # Install IJulia packages as jovyan and then move the kernelspec out
+##  # to the system share location. Avoids problems with runtime UID change not
+##  # taking effect properly on the .local folder in the jovyan home dir.
+##  RUN julia -e 'Pkg.add("IJulia")' && \
+##      mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+##      chmod -R go+rx $CONDA_DIR/share/jupyter && \
+##      rm -rf $HOME/.local
+##  
+##  # Show Julia where conda libraries are
+##  # Add essential packages
+##  RUN echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc.jl && \
+##      julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e 'Pkg.add("HDF5")'
+##  
+##  # Precompile Julia pakcages
+##  RUN julia -e 'using IJulia' && julia -e 'using Gadfly' && julia -e 'using RDatasets'&& julia -e 'using HDF5'
+##  
+# ******** no Julia for now ********
 
 #----------- end datascience
 
@@ -271,30 +297,10 @@ RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
 #--------- Duke-specific additions ---
 # add bash kernel for the user jovyan
-USER jovyan
+# USER jovyan
 RUN pip install  bash_kernel
 RUN python -m bash_kernel.install
-USER root
-
-# mysql client so we can connect to an SQL server from bash shell
-RUN apt-get update && apt-get -yq dist-upgrade \
- && apt-get install -yq --no-install-recommends \
-  mysql-client \
-  python-mysqldb \
-  python-dev \ 
-  libmysqlclient-dev \ 
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-# python notebook support for sql
-RUN pip install mysqlclient
-ADD ipython-sql /home/jovyan/ipython-sql
-RUN chown -R jovyan /home/jovyan/ipython-sql
-
-USER jovyan
-
-RUN cd /home/jovyan/ipython-sql; \
-    python setup.py install
+# USER root
 
 RUN conda install --yes \
     'numpy=1.11*' \
@@ -318,16 +324,65 @@ RUN apt-get update \
     liblapack3 \
     libblas-dev \
     liblapack-dev \
+    libeigen3-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 # ggplot
 #
 RUN pip install ggplot
+RUN pip install cppimport
+
+# pgmpy is not available in anaconda, so we use pip to install it
+RUN pip install pgmpy
+RUN pip install pygraphviz
+
+# Probabilistic programmming
+RUN pip install tensorflow
+RUN pip  install edward
+RUN pip install daft
+RUN pip install pymc3
+RUN pip install pystan
+
+#--- start spark support
+RUN apt-get update && \
+    apt-get install -y  \
+    krb5-multidev \
+    pkg-config && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# install the dev version of the spark magic 
+#USER root
+#RUN cd / ; \
+#   git clone https://github.com/jupyter-incubator/sparkmagic.git
+#RUN cd /sparkmagic ; \
+#   pip install -e hdijupyterutils; \ 
+#   pip install -e autovizwidget ; \
+#   pip install -e sparkmagic
+#
+#RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension 
+#RUN cd /sparkmagic/sparkmagic ; \
+#    jupyter-kernelspec install sparkmagic/kernels/pysparkkernel \
+
+# skip the Spark and SparkR kernel's for now - pyspark is enough for this course
+#RUN cd /sparkmagic/sparkmagic ; \
+#    jupyter-kernelspec install sparkmagic/kernels/sparkkernel 
+#RUN cd /sparkmagic/sparkmagic ; \
+#    jupyter-kernelspec install sparkmagic/kernels/sparkrkernel
+
+##### conda version of the spark magic is not that good, but in case someone cares:
+####RUN pip install  sparkmagic
+####RUN cd /opt/conda/lib/python3.5/site-packages ; \
+####    jupyter-kernelspec install sparkmagic/kernels/sparkkernel \
+####     jupyter-kernelspec install sparkmagic/kernels/pysparkkernel \
+####     jupyter-kernelspec install sparkmagic/kernels/pyspark3kernel \
+####     jupyter-kernelspec install sparkmagic/kernels/sparkrkernel
+
+#--- end spark support
 
 
 #------end Duke-specific additions ---
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_USER
+USER jovyan
 

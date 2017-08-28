@@ -1,0 +1,14 @@
+sudo docker run --name jupyter-BIO821-001 --link test-mysql:jupyter-BIO821-001 \
+  -d -p 40001:8888 \
+  -e PASSWORD="badpassword" \
+  -v /srv/persistent-data/homedirs/user001:/home/jovyan/work \
+  -e NB_UID=1000 \
+  jupyter-BIO821
+sleep 3
+sudo docker run --name jupyter-BIO821-002 --link test-mysql:jupyter-BIO821-002 \
+  -d -p 40002:8888 \
+  -e PASSWORD="badpassword" \
+  -v /srv/persistent-data/homedirs/user002:/home/jovyan/work \
+  -e NB_UID=1000 \
+  jupyter-BIO821
+sleep 3
