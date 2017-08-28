@@ -1,4 +1,5 @@
 before_script:
+  - date
   - whoami
   - sudo docker --version
 
