@@ -348,9 +348,7 @@ RUN pip install pystan
 RUN apt-get update && \
     apt-get install -y \
     manpages \
-    manpages-dev \
-    manpages-posix \
-    manpages-posix-dev
+    manpages-dev 
 
 #--- start spark support
 RUN apt-get update && \
