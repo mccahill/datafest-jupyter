@@ -344,6 +344,19 @@ RUN pip install daft
 RUN pip install pymc3
 RUN pip install pystan
 
+# man pages
+RUN apt-get update && \
+    apt-get install -y \
+    manpages \
+    manpages-dev \
+    freebsd-manpages \
+    funny-manpages \
+    gmt-manpages \
+    man2html \
+    manpages-posix \
+    manpages-posix-dev \
+    asr-manpages
+
 #--- start spark support
 RUN apt-get update && \
     apt-get install -y  \
