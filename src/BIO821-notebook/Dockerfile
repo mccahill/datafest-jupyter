@@ -351,6 +351,11 @@ RUN apt-get update && \
     manpages-dev \
     man
 
+# Unix utilites
+RUN apt-get update && \
+    apt-get install -y \
+    less
+
 #--- start spark support
 RUN apt-get update && \
     apt-get install -y  \
