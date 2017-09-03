@@ -354,7 +354,8 @@ RUN apt-get update && \
 # Unix utilites
 RUN apt-get update && \
     apt-get install -y \
-    less
+    less \
+    bc 
 
 #--- start spark support
 RUN apt-get update && \
