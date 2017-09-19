@@ -344,6 +344,22 @@ RUN pip install daft
 RUN pip install pymc3
 RUN pip install pystan
 
+# Python packages for data science
+RUN pip install toolz
+RUN pip  install funcy
+RUN pip install dash
+RUN pip install dash-html-components
+RUN pip install dash-core-components
+RUN pip install plotly
+RUN pip install gensim
+RUN pip install scrapy
+RUN pip install spacy
+RUN pip install progressbar
+RUN pip install statsmodels
+RUN pip install pytest
+RUN pip install feather
+RUN pip instal cppimport
+
 # man pages
 RUN apt-get update && \
     apt-get install -y \
