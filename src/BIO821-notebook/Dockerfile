@@ -355,7 +355,7 @@ RUN pip install gensim
 RUN pip install scrapy
 RUN pip install spacy
 # RUN pip install progressbar
-RUN pip install statsmodels
+# RUN pip install statsmodels
 RUN pip install pytest
 RUN pip install feather
 RUN pip instal cppimport
