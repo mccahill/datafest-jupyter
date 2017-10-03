@@ -358,10 +358,11 @@ RUN pip install sh
 RUN pip install Faker
 RUN pip install pandas_datareader
 RUN pip install feather-format
-RUN pip install h5py
+# RUN pip install h5py
 RUN pip install arrow
 RUN pip install ipython-sql
-RUN pip install sqlalchemy
+# RUN pip install sqlalchemy
+RUN pip install biopython
 # RUN pip install pytest
 # RUN pip install feather
 # RUN pip instal cppimport
