@@ -112,7 +112,7 @@ USER $NB_USER
 RUN conda install --quiet --yes \
     'nomkl' \
     'ipywidgets=5.2*' \
-    'pandas=0.19*' \
+    'pandas' \
     'numexpr=2.6*' \
     'matplotlib=1.5*' \
     'scipy=0.17*' \
@@ -144,6 +144,7 @@ RUN conda install --quiet --yes \
     'pybind11' \
 #    'cppimport' \
     'xlrd'  && \
+    'pytables' \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
 
