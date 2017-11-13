@@ -142,9 +142,9 @@ RUN conda install --quiet --yes \
     'joblib' \
     'ipyparallel' \
     'pybind11' \
-#    'cppimport' \
-    'xlrd'  && \
     'pytables' \
+    #    'cppimport' \
+    'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
 
