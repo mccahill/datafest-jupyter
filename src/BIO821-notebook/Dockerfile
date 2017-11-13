@@ -79,8 +79,8 @@ RUN cd /tmp && \
     rm Miniconda3-4.1.11-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
-    $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
-    conda clean -tipsy
+    $CONDA_DIR/bin/conda config --system --set auto_update_conda false # && \
+    # conda clean -tipsy
 
 # Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
 # Stick with jpeg 8 to avoid problems with R packages
@@ -90,8 +90,8 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 RUN conda install --quiet --yes \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
-    'jupyterlab=0.24.*' \
-    && conda clean -tipsy
+    'jupyterlab=0.24.*' # \
+    # && conda clean -tipsy
     
 
 #----------- scipy
@@ -181,9 +181,10 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'pyzmq' \
     'vincent=0.4.*' \
     'beautifulsoup4=4.5.*' \
+    'pytables' \
     'xlrd' && \
-    conda remove -n python2 --quiet --yes --force qt pyqt && \
-    conda clean -tipsy
+    conda remove -n python2 --quiet --yes --force qt pyqt # && \
+    # conda clean -tipsy
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
@@ -256,7 +257,7 @@ RUN conda config --add channels r && \
     'r-nycflights13=0.2*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
-    'r-randomforest=4.6*' && conda clean -tipsy
+    'r-randomforest=4.6*' # && conda clean -tipsy
 
 # ******** no Julia for now ********
 ##	
