@@ -145,8 +145,8 @@ RUN conda install --quiet --yes \
     'pytables' \
     #    'cppimport' \
     'xlrd'  && \
-    conda remove --quiet --yes --force qt pyqt && \
-    conda clean -tipsy
+    conda remove --quiet --yes --force qt pyqt # && \
+    # conda clean -tipsy
 
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
