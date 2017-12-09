@@ -88,9 +88,9 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
-    'notebook=5.0.*' \
-    'jupyterhub=0.7.*' \
-    'jupyterlab=0.24.*' # \
+    'notebook' \
+    'jupyterhub' \
+    'jupyterlab' # \
     # && conda clean -tipsy
     
 
@@ -305,11 +305,11 @@ RUN python -m bash_kernel.install
 USER root
 
 RUN conda install --yes \
-    'numpy=1.11*' \
-    'pillow=3.4*' \
-    'requests=2.12*' \
-    'nose=1.3*' \
-    'pystan=2.8*' \
+    'numpy' \
+    'pillow' \
+    'requests' \
+    'nose' \
+    'pystan' \
    && conda clean -yt
 
 USER root
