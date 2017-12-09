@@ -74,7 +74,7 @@ RUN mkdir /home/$NB_USER/work && \
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh && \
-    echo "bd1655b4b313f7b2a1f2e15b7b925d03 *Miniconda3-4.3.30-Linux-x86_64.sh" | sha256sum -c - && \
+    # echo "bd1655b4b313f7b2a1f2e15b7b925d03 *Miniconda3-4.3.30-Linux-x86_64.sh" | sha256sum -c - && \
     /bin/bash Miniconda3-4.3.30-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-4.3.30-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.3.30 && \
