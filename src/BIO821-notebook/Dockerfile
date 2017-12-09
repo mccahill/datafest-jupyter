@@ -153,57 +153,58 @@ RUN conda install --quiet --yes \
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 RUN ipcluster nbextension  enable --user
 
+# # No Python 2 needed
 
-# Install Python 2 packages
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
-    'nomkl' \
-    'ipython' \
-    'ipywidget' \
-    'pandas' \
-    'numexpr' \
-    'matplotlib' \
-    'scipy' \
-    'seaborn' \
-    'scikit-learn' \
-    'scikit-image' \
-    'sympy' \
-    'cython' \
-    'patsy' \
-    'statsmodels' \
-    'cloudpickle' \
-    'dill' \
-    'numba' \
-    'bokeh' \
-    'hdf5' \
-    'h5py' \
-    'sqlalchemy' \
-    'pyzmq' \
-    'vincent' \
-    'beautifulsoup4' \
-    'pytables' \
-    'xlrd' && \
-    conda remove -n python2 --quiet --yes --force qt pyqt # && \
-    # conda clean -tipsy
-# Add shortcuts to distinguish pip for python2 and python3 envs
+# # Install Python 2 packages
+# # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# # use notebook-friendly backends in these images
+# RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+#     'nomkl' \
+#     'ipython' \
+#     'ipywidget' \
+#     'pandas' \
+#     'numexpr' \
+#     'matplotlib' \
+#     'scipy' \
+#     'seaborn' \
+#     'scikit-learn' \
+#     'scikit-image' \
+#     'sympy' \
+#     'cython' \
+#     'patsy' \
+#     'statsmodels' \
+#     'cloudpickle' \
+#     'dill' \
+#     'numba' \
+#     'bokeh' \
+#     'hdf5' \
+#     'h5py' \
+#     'sqlalchemy' \
+#     'pyzmq' \
+#     'vincent' \
+#     'beautifulsoup4' \
+#     'pytables' \
+#     'xlrd' && \
+#     conda remove -n python2 --quiet --yes --force qt pyqt # && \
+#     # conda clean -tipsy
+# # Add shortcuts to distinguish pip for python2 and python3 envs
 
-# RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
-#     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
+# # RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
+# #     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
 
-# Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
-RUN MPLBACKEND=Agg $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pyplot"
+# # Import matplotlib the first time to build the font cache.
+# ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
+# RUN MPLBACKEND=Agg $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pyplot"
 
-# Configure ipython kernel to use matplotlib inline backend by default
-RUN mkdir -p $HOME/.ipython/profile_default/startup
-COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
+# # Configure ipython kernel to use matplotlib inline backend by default
+# RUN mkdir -p $HOME/.ipython/profile_default/startup
+# COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
 
-USER root
+# USER root
 
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
+# # Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# # switching at runtime.
+# RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
 
 USER $NB_USER
 
