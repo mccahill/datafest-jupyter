@@ -160,7 +160,7 @@ RUN ipcluster nbextension  enable --user
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'nomkl' \
     'ipython' \
-    'ipywidget' \
+    # 'ipywidget' \
     'pandas' \
     'numexpr' \
     'matplotlib' \
