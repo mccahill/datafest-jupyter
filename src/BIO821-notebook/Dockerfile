@@ -87,7 +87,7 @@ RUN cd /tmp && \
 RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Jupyter notebook as jovyan
-RUN conda install --quiet --yes \
+RUN conda install --yes \
     'jupyter' 
     # 'notebook' \
     # 'jupyterhub' \
