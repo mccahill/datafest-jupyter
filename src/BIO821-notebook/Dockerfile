@@ -111,27 +111,27 @@ USER $NB_USER
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'nomkl' \
-    'ipywidgets=5.2*' \
+    'ipywidgets' \
     'pandas' \
-    'numexpr=2.6*' \
-    'matplotlib=1.5*' \
-    'scipy=0.17*' \
-    'seaborn=0.7*' \
-    'scikit-learn=0.17*' \
-    'scikit-image=0.11*' \
-    'sympy=1.0*' \
-    'cython=0.23*' \
-    'patsy=0.4*' \
-    'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
-    'dill=0.2*' \
-    'numba=0.23*' \
-    'bokeh=0.11*' \
-    'sqlalchemy=1.0*' \
-    'hdf5=1.8.17' \
-    'h5py=2.6*' \
-    'vincent=0.4.*' \
-    'beautifulsoup4=4.5.*' \
+    'numexpr' \
+    'matplotlib' \
+    'scipy' \
+    'seaborn' \
+    'scikit-learn' \
+    'scikit-image' \
+    'sympy' \
+    'cython' \
+    'patsy' \
+    'statsmodels' \
+    'cloudpickle' \
+    'dill' \
+    'numba' \
+    'bokeh' \
+    'sqlalchemy' \
+    'hdf5' \
+    'h5py' \
+    'vincent' \
+    'beautifulsoup4' \
     'openpyxl' \
     'pandas-datareader' \
     'ipython-sql' \
@@ -158,29 +158,29 @@ RUN ipcluster nbextension  enable --user
 # use notebook-friendly backends in these images
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'nomkl' \
-    'ipython=4.2*' \
-    'ipywidgets=5.2*' \
-    'pandas=0.19*' \
-    'numexpr=2.6*' \
-    'matplotlib=1.5*' \
-    'scipy=0.17*' \
-    'seaborn=0.7*' \
-    'scikit-learn=0.17*' \
-    'scikit-image=0.11*' \
-    'sympy=1.0*' \
-    'cython=0.23*' \
-    'patsy=0.4*' \
-    'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
-    'dill=0.2*' \
-    'numba=0.23*' \
-    'bokeh=0.11*' \
-    'hdf5=1.8.17' \
-    'h5py=2.6*' \
-    'sqlalchemy=1.0*' \
+    'ipython' \
+    'ipywidget' \
+    'pandas' \
+    'numexpr' \
+    'matplotlib' \
+    'scipy' \
+    'seaborn' \
+    'scikit-learn' \
+    'scikit-image' \
+    'sympy' \
+    'cython' \
+    'patsy' \
+    'statsmodels' \
+    'cloudpickle' \
+    'dill' \
+    'numba' \
+    'bokeh' \
+    'hdf5' \
+    'h5py' \
+    'sqlalchemy' \
     'pyzmq' \
-    'vincent=0.4.*' \
-    'beautifulsoup4=4.5.*' \
+    'vincent' \
+    'beautifulsoup4' \
     'pytables' \
     'xlrd' && \
     conda remove -n python2 --quiet --yes --force qt pyqt # && \
