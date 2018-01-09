@@ -10,18 +10,18 @@ stages:
 
 build:
   tags: 
-    - jupyter-BIO821
+    - jipyn-az-06r
     - production1
   stage: build
   script: 
     - echo "Building the app in staging"
-    - cd src/BIO821-notebook; pwd; ls -la
+    - cd src/STA663-notebook; pwd; ls -la
     - ./build-test
 
 
 deploy_staging:
   tags: 
-    - jupyter-BIO821
+    - ipyn-az-06r
     - production1
   stage: deploy
   script:
@@ -35,12 +35,12 @@ deploy_staging:
 
 deploy_production:
   tags: 
-    - jupyter-BIO821
+    - ipyn-az-06r
     - production1
   stage: deploy
   script:
     - echo "Building the production app"
-    - cd src/BIO821-notebook; pwd; ls -la
+    - cd src/STA663-notebook; pwd; ls -la
     - ./build-production
     - echo "Deploy to production server"
     - cd /srv/persistent-data/docker-scripts; ./run-everything
