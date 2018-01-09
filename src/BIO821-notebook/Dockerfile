@@ -73,14 +73,14 @@ RUN mkdir /home/$NB_USER/work && \
 # Install conda as jovyan
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.1.11-Linux-x86_64.sh && \
-    echo "efd6a9362fc6b4085f599a881d20e57de628da8c1a898c08ec82874f3bad41bf *Miniconda3-4.1.11-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.1.11-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh && \
+    # echo "bd1655b4b313f7b2a1f2e15b7b925d03 *Miniconda3-4.3.30-Linux-x86_64.sh" | sha256sum -c - && \
+    /bin/bash Miniconda3-4.3.30-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-4.3.30-Linux-x86_64.sh && \
+    $CONDA_DIR/bin/conda install --quiet --yes conda==4.3.30 && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
-    $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
-    conda clean -tipsy
+    $CONDA_DIR/bin/conda config --system --set auto_update_conda false # && \
+    # conda clean -tipsy
 
 # Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
 # Stick with jpeg 8 to avoid problems with R packages
@@ -88,10 +88,11 @@ RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
-    'notebook=5.0.*' \
-    'jupyterhub=0.7.*' \
-    'jupyterlab=0.24.*' \
-    && conda clean -tipsy
+    'jupyter' 
+    # 'notebook' \
+    # 'jupyterhub' \
+    # 'jupyterlab' # \
+    # && conda clean -tipsy
     
 
 #----------- scipy
@@ -111,27 +112,27 @@ USER $NB_USER
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'nomkl' \
-    'ipywidgets=5.2*' \
-    'pandas=0.19*' \
-    'numexpr=2.6*' \
-    'matplotlib=1.5*' \
-    'scipy=0.17*' \
-    'seaborn=0.7*' \
-    'scikit-learn=0.17*' \
-    'scikit-image=0.11*' \
-    'sympy=1.0*' \
-    'cython=0.23*' \
-    'patsy=0.4*' \
-    'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
-    'dill=0.2*' \
-    'numba=0.23*' \
-    'bokeh=0.11*' \
-    'sqlalchemy=1.0*' \
-    'hdf5=1.8.17' \
-    'h5py=2.6*' \
-    'vincent=0.4.*' \
-    'beautifulsoup4=4.5.*' \
+    'ipywidgets' \
+    'pandas' \
+    'numexpr' \
+    'matplotlib' \
+    'scipy' \
+    'seaborn' \
+    'scikit-learn' \
+    'scikit-image' \
+    'sympy' \
+    'cython' \
+    'patsy' \
+    'statsmodels' \
+    'cloudpickle' \
+    'dill' \
+    'numba' \
+    'bokeh' \
+    'sqlalchemy' \
+    'hdf5' \
+    'h5py' \
+    'vincent' \
+    'beautifulsoup4' \
     'openpyxl' \
     'pandas-datareader' \
     'ipython-sql' \
@@ -142,64 +143,68 @@ RUN conda install --quiet --yes \
     'joblib' \
     'ipyparallel' \
     'pybind11' \
-#    'cppimport' \
+    'pytables' \
+    #    'cppimport' \
     'xlrd'  && \
-    conda remove --quiet --yes --force qt pyqt && \
-    conda clean -tipsy
+    conda remove --quiet --yes --force qt pyqt # && \
+    # conda clean -tipsy
 
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 RUN ipcluster nbextension  enable --user
 
+# # No Python 2 needed
 
-# Install Python 2 packages
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
-    'nomkl' \
-    'ipython=4.2*' \
-    'ipywidgets=5.2*' \
-    'pandas=0.19*' \
-    'numexpr=2.6*' \
-    'matplotlib=1.5*' \
-    'scipy=0.17*' \
-    'seaborn=0.7*' \
-    'scikit-learn=0.17*' \
-    'scikit-image=0.11*' \
-    'sympy=1.0*' \
-    'cython=0.23*' \
-    'patsy=0.4*' \
-    'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
-    'dill=0.2*' \
-    'numba=0.23*' \
-    'bokeh=0.11*' \
-    'hdf5=1.8.17' \
-    'h5py=2.6*' \
-    'sqlalchemy=1.0*' \
-    'pyzmq' \
-    'vincent=0.4.*' \
-    'beautifulsoup4=4.5.*' \
-    'xlrd' && \
-    conda remove -n python2 --quiet --yes --force qt pyqt && \
-    conda clean -tipsy
-# Add shortcuts to distinguish pip for python2 and python3 envs
-RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
-    ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
+# # Install Python 2 packages
+# # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# # use notebook-friendly backends in these images
+# RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+#     'nomkl' \
+#     'ipython' \
+#     'ipywidget' \
+#     'pandas' \
+#     'numexpr' \
+#     'matplotlib' \
+#     'scipy' \
+#     'seaborn' \
+#     'scikit-learn' \
+#     'scikit-image' \
+#     'sympy' \
+#     'cython' \
+#     'patsy' \
+#     'statsmodels' \
+#     'cloudpickle' \
+#     'dill' \
+#     'numba' \
+#     'bokeh' \
+#     'hdf5' \
+#     'h5py' \
+#     'sqlalchemy' \
+#     'pyzmq' \
+#     'vincent' \
+#     'beautifulsoup4' \
+#     'pytables' \
+#     'xlrd' && \
+#     conda remove -n python2 --quiet --yes --force qt pyqt # && \
+#     # conda clean -tipsy
+# # Add shortcuts to distinguish pip for python2 and python3 envs
 
-# Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
-RUN MPLBACKEND=Agg $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pyplot"
+# # RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
+# #     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
 
-# Configure ipython kernel to use matplotlib inline backend by default
-RUN mkdir -p $HOME/.ipython/profile_default/startup
-COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
+# # Import matplotlib the first time to build the font cache.
+# ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
+# RUN MPLBACKEND=Agg $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pyplot"
 
-USER root
+# # Configure ipython kernel to use matplotlib inline backend by default
+# RUN mkdir -p $HOME/.ipython/profile_default/startup
+# COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
 
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
+# USER root
+
+# # Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# # switching at runtime.
+# RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
 
 USER $NB_USER
 
@@ -255,7 +260,7 @@ RUN conda config --add channels r && \
     'r-nycflights13=0.2*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
-    'r-randomforest=4.6*' && conda clean -tipsy
+    'r-randomforest=4.6*' # && conda clean -tipsy
 
 # ******** no Julia for now ********
 ##	
@@ -303,11 +308,11 @@ RUN python -m bash_kernel.install
 USER root
 
 RUN conda install --yes \
-    'numpy=1.11*' \
-    'pillow=3.4*' \
-    'requests=2.12*' \
-    'nose=1.3*' \
-    'pystan=2.8*' \
+    'numpy' \
+    'pillow' \
+    'requests' \
+    'nose' \
+    'pystan' \
    && conda clean -yt
 
 USER root
@@ -343,6 +348,42 @@ RUN pip  install edward
 RUN pip install daft
 RUN pip install pymc3
 RUN pip install pystan
+
+# Python packages for data science
+RUN pip install toolz
+RUN pip  install funcy
+RUN pip install dash
+RUN pip install dash-html-components
+RUN pip install dash-core-components
+RUN pip install plotly
+RUN pip install gensim
+RUN pip install scrapy
+RUN pip install spacy
+RUN pip install sh
+RUN pip install Faker
+RUN pip install pandas_datareader
+RUN pip install feather-format
+# RUN pip install h5py
+RUN pip install arrow
+RUN pip install ipython-sql
+# RUN pip install sqlalchemy
+RUN pip install biopython
+# RUN pip install pytest
+# RUN pip install feather
+# RUN pip instal cppimport
+
+# man pages
+RUN apt-get update && \
+    apt-get install -y \
+    manpages \
+    manpages-dev \
+    man
+
+# Unix utilites
+RUN apt-get update && \
+    apt-get install -y \
+    less \
+    bc 
 
 #--- start spark support
 RUN apt-get update && \
