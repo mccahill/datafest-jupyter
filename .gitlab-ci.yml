@@ -10,7 +10,7 @@ stages:
 
 build:
   tags: 
-    - jipyn-az-06r
+    - ipyn-az-06r
     - production1
   stage: build
   script: 
