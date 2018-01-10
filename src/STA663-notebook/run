@@ -1,6 +1,7 @@
 sudo docker run --name jupyter-STA663-001 \
   -d -p 9999:8888 \
   -e PASSWORD="badpassword" \
+  -e DISABLE_XSRF=TRUE \
   -v /srv/persistent-data/homedirs/user001:/home/jovyan/work \
   -e NB_UID=1000 \
   jupyter-sta663 
