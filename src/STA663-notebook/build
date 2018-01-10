@@ -1,1 +1,1 @@
-sudo docker build --tag jupyter-bio821 .
+sudo docker build --tag jupyter-sta663 .

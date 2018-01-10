@@ -1,8 +1,8 @@
-Source for the BIO821 course's Jupyter notebook docker 
+Source for the STA663 course's Jupyter notebook docker 
 containers is found in
 
 ```
-    ./src/BIO821-notebook
+    ./src/STA663-notebook
 ```
 
 Note that in addition to the Jupyter notebook container we
@@ -15,6 +15,6 @@ provisioning the whole service onto arbitraty VMs.
 So you probably don't need to look at or worry about anything except
 
 ```
-    ./src/BIO821-notebook
+    ./src/STA663-notebook
 ```
 
