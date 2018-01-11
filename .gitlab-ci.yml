@@ -15,14 +15,14 @@ build:
   stage: build
   script: 
     - echo "Building the app in staging"
-    - cd src/STA663-notebook/docker-scripts; pwd; ls -la
+    - cd src/STA663-notebook/; pwd; ls -la
     - ./build-test
 
 .deploy_staging_template: &deploy_staging_definition  # Hidden key that defines an anchor named 'deploy_staging_definition'
   stage: deploy
   script:
     - echo "Building the app in staging"
-    - pwd; ls -la
+    - cd src/STA663-notebook/; pwd; ls -la
     - ./build-test
     - echo "Deploy to staging server"
     - pwd; ls -la
@@ -52,7 +52,7 @@ deploy_staging_11:
   stage: deploy
   script:
     - echo "Building the production app"
-    - pwd; ls -la
+    - cd src/STA663-notebook/; pwd; ls -la
     - ./build-production
     - echo "Deploy to production server"
     - cd /srv/persistent-data/docker-scripts; ./run-everything
