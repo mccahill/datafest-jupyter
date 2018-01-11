@@ -15,32 +15,44 @@ build:
   stage: build
   script: 
     - echo "Building the app in staging"
-    - cd src/STA663-notebook; pwd; ls -la
+    - cd src/STA663-notebook/; pwd; ls -la
     - ./build-test
 
-
-deploy_staging:
-  tags: 
-    - ipyn-az-06r
-    - STA663
+.deploy_staging_template: &deploy_staging_definition  # Hidden key that defines an anchor named 'deploy_staging_definition'
   stage: deploy
   script:
+    - echo "Building the app in staging"
+    - cd src/STA663-notebook/; pwd; ls -la
+    - ./build-test
     - echo "Deploy to staging server"
-    - cd docker-scripts; pwd; ls -la; ./run-test-instance
+    - pwd; ls -la
+    - ./run-test-instance
   environment:
     name: staging
   only:
   - staging
 
-
-deploy_production:
+deploy_staging_06:
   tags: 
     - ipyn-az-06r
     - STA663
+  <<: *deploy_staging_definition           # Merge the contents of the 'deploy_staging_definition' alias
+
+
+deploy_staging_11:
+  tags: 
+    - ipyn-az-11
+    - STA663
+  <<: *deploy_staging_definition           # Merge the contents of the 'deploy_staging_definition' alias
+
+#
+############# deploy_production ##############
+#
+.deploy_production_template: &deploy_production_definition  # Hidden key that defines an anchor named 'deploy_production_definition'
   stage: deploy
   script:
     - echo "Building the production app"
-    - cd src/STA663-notebook; pwd; ls -la
+    - cd src/STA663-notebook/; pwd; ls -la
     - ./build-production
     - echo "Deploy to production server"
     - cd /srv/persistent-data/docker-scripts; ./run-everything
@@ -49,4 +61,17 @@ deploy_production:
   when: manual
   only:
   - master
+
+
+deploy_production_06:
+  tags: 
+    - ipyn-az-06r
+    - STA663
+  <<: *deploy_production_definition           # Merge the contents of the 'deploy_production_definition' alias
+
+deploy_production_11:
+  tags: 
+    - ipyn-az-11
+    - STA663
+  <<: *deploy_production_definition           # Merge the contents of the 'deploy_production_definition' alias
 
