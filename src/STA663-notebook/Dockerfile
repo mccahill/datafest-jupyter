@@ -371,6 +371,7 @@ RUN pip install biopython
 # RUN pip install pytest
 # RUN pip install feather
 # RUN pip instal cppimport
+RUN pip install imageio
 
 # man pages
 RUN apt-get update && \
