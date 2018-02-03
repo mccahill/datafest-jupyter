@@ -372,6 +372,8 @@ RUN pip install biopython
 # RUN pip install feather
 # RUN pip instal cppimport
 RUN pip install imageio
+RUN pip install pandas_datareader
+RUN pip install multiprocess
 
 # man pages
 RUN apt-get update && \
