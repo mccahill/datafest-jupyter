@@ -374,6 +374,7 @@ RUN pip install biopython
 RUN pip install imageio
 RUN pip install pandas_datareader
 RUN pip install multiprocess
+RUN pip install sparsesvd
 
 # man pages
 RUN apt-get update && \
