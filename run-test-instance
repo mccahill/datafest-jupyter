@@ -14,17 +14,16 @@ done < $INPUT
 IFS=$OLDIFS
 
 echo ipyn-az-$MYHOSTID.oit.duke.edu:443
-sudo docker kill jupyter-test-443
-sudo docker rm jupyter-test-443
-sudo docker run --name jupyter-test-443 \
+sudo docker kill datafest-jupyter-test
+sudo docker rm datafest-jupyter-test
+sudo docker run --name datafest-jupyter-test \
   -d -p 127.0.0.1\:\:8888 \
   --memory 5000M \
   -e PASSWORD=$STAGING_TEST_PASSWORD \
   -e DISABLE_XSRF=TRUE \
   -e VIRTUAL_HOST=ipyn-az-$MYHOSTID.oit.duke.edu\:443 \
   -e MAP_VIRTUAL_PORT=443 \
-  -v /srv/persistent-data/homedirs/monitoring-user-spark/.sparkmagic\:/home/jovyan/.sparkmagic \
-  -v /srv/persistent-data/homedirs/monitoring-user-spark/work\:/home/jovyan/work \
+  -v /srv/persistent-data/homedirs/test-user/work\:/home/jovyan/work \
   -e NB_UID=1000 \
-  -t jupyter-test
+  -t datafest-jupyter
 
