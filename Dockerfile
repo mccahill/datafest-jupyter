@@ -307,13 +307,20 @@ RUN pip install  bash_kernel
 RUN python -m bash_kernel.install
 USER root
 
-RUN conda install --yes \
-    'numpy' \
-    'pillow' \
-    'requests' \
-    'nose' \
-    'pystan' \
-   && conda clean -yt
+# break this up since it seems to cause a timeout on hub.docker.com automated build
+#RUN conda install --yes \
+#    'numpy' \
+#    'pillow' \
+#    'requests' \
+#    'nose' \
+#    'pystan' \
+#   && conda clean -yt
+RUN conda install --yes 'numpy' 
+RUN conda install --yes 'pillow' 
+RUN conda install --yes 'requests' 
+RUN conda install --yes 'nose' 
+RUN conda install --yes 'pystan' 
+RUN conda clean -yt
 
 USER root
 
