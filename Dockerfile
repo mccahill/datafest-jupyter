@@ -145,7 +145,13 @@ RUN conda install --quiet --yes \
     'pybind11' \
     'pytables' \
     #    'cppimport' \
-    'xlrd'  && \
+    'xlrd'  \ 
+	# moved up from below to install  earlier
+	'numpy' \
+	'pillow' \
+	'requests' \
+	'nose' \
+	'pystan' && \
     conda remove --quiet --yes --force qt pyqt # && \
     # conda clean -tipsy
 
@@ -315,12 +321,6 @@ USER root
 #    'nose' \
 #    'pystan' \
 #   && conda clean -yt
-RUN conda install --yes 'pillow' 
-RUN conda install --yes 'requests' 
-RUN conda install --yes 'nose' 
-RUN conda install --yes 'pystan' 
-RUN conda install --yes 'numpy' 
-RUN conda clean -yt
 
 USER root
 
