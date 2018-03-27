@@ -315,11 +315,11 @@ USER root
 #    'nose' \
 #    'pystan' \
 #   && conda clean -yt
-RUN conda install --yes 'numpy' 
 RUN conda install --yes 'pillow' 
 RUN conda install --yes 'requests' 
 RUN conda install --yes 'nose' 
 RUN conda install --yes 'pystan' 
+RUN conda install --yes 'numpy' 
 RUN conda clean -yt
 
 USER root
