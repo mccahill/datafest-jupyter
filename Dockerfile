@@ -248,7 +248,7 @@ USER $NB_USER
 # R packages including IRKernel which gets installed globally.
 # Pin r-base to a specific build number for https://github.com/jupyter/docker-stacks/issues/210#issuecomment-246081809
 RUN conda config --add channels r && \
-    conda install --quiet --yes \
+    conda install --yes \
     'rpy2=2.8*' \
     'r-base=3.3.1 1' \
     'r-irkernel=0.7*' \
@@ -313,7 +313,8 @@ RUN pip install  bash_kernel
 RUN python -m bash_kernel.install
 USER root
 
-# break this up since it seems to cause a timeout on hub.docker.com automated build
+# move this up to install with the other CONDA stuff since 
+# installing it here seems to cause a timeout on hub.docker.com automated build
 #RUN conda install --yes \
 #    'numpy' \
 #    'pillow' \
@@ -358,7 +359,7 @@ RUN pip install pystan
 
 # Python packages for data science
 RUN pip install toolz
-RUN pip  install funcy
+RUN pip install funcy
 RUN pip install dash
 RUN pip install dash-html-components
 RUN pip install dash-core-components
